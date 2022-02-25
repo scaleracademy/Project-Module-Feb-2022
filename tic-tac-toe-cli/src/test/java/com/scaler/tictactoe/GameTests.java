@@ -1,9 +1,9 @@
 package com.scaler.tictactoe;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class GameTests {
 
@@ -31,10 +31,26 @@ public class GameTests {
     void canMarkBoxesViaAttempts() {
         Game g = new Game("❌", "⭕️");
 
-        g.nextAttempt(0);
+        g.nextAttempt(1);
 
-        assertEquals("❌", g.getCharInBox(0));
+        assertEquals("❌", g.getCharInBox(1));
         assertEquals(g.getP2(), g.getNextTurn());
+
+        // check that already marked boxes are not allowed to be marked
+
+        assertThrowsExactly(IllegalStateException.class, () -> {
+            g.nextAttempt(1);
+        });
+
+    }
+
+    @Test
+    void throwsExceptionForInvalidBoxAttempt() {
+        Game g = new Game("❌", "⭕️");
+
+        assertThrowsExactly(IllegalArgumentException.class, () -> {
+            g.nextAttempt(10);
+        });
 
     }
 }

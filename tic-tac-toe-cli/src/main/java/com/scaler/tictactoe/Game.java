@@ -22,29 +22,12 @@ public class Game {
         nextTurn = p1;
     }
 
-    public String getCharInBox(int boxNo) {
-        switch (boxNo) {
-            case 1:
-                return gameState[0][0];
-            case 2:
-                return gameState[0][1];
-            case 3:
-                return gameState[0][2];
-            case 4:
-                return gameState[1][0];
-            case 5:
-                return gameState[1][1];
-            case 6:
-                return gameState[1][2];
-            case 7:
-                return gameState[2][0];
-            case 8:
-                return gameState[2][1];
-            case 9:
-                return gameState[2][2];
-            default:
-                return null;
-        }
+    public String getCharInBox(int box) {
+        int row = (box - 1) / 3;
+        int col = (box - 1) % 3;
+
+        if (box < 1 || box > 9) throw new IllegalArgumentException("Box no. must be between 1 and 9");
+        else return gameState[row][col];
     }
 
     /**
@@ -53,6 +36,18 @@ public class Game {
      * @param box the box in which to be marked
      */
     public void nextAttempt(int box) {
+        int row = (box - 1) / 3;
+        int col = (box - 1) % 3;
+
+        if (box < 1 || box > 9) throw new IllegalArgumentException("Box no. must be between 1 and 9");
+        if (gameState[row][col] != null) throw new IllegalStateException("This box is not empty");
+
+        gameState[row][col] = nextTurn.getCharacter();
+
+        // switch turn of players
+        if (nextTurn == p1) nextTurn = p2;
+        else nextTurn = p1;
+
 
     }
 }
