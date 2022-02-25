@@ -8,8 +8,14 @@ public class Greet {
     public static final String GREET_AFT = "Good Afternoon";
     public static final String GREET_EVE = "Good Evening";
 
-    public static String fetchGreeting() {
-        int hotd = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+    private Calendar calendar;
+
+    public Greet(Calendar calendar) {
+        this.calendar = calendar;
+    }
+
+    public String fetchGreeting() {
+        int hotd = calendar.get(Calendar.HOUR_OF_DAY);
 
         if (hotd < 12) {
             return GREET_MORN;
