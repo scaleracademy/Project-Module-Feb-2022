@@ -1,7 +1,6 @@
 package com.scaler.tictactoe;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -38,9 +37,7 @@ public class GameTests {
 
         // check that already marked boxes are not allowed to be marked
 
-        assertThrowsExactly(IllegalStateException.class, () -> {
-            g.nextAttempt(1);
-        });
+        assertThrowsExactly(IllegalStateException.class, () -> g.nextAttempt(1));
 
     }
 
@@ -48,9 +45,40 @@ public class GameTests {
     void throwsExceptionForInvalidBoxAttempt() {
         Game g = new Game("❌", "⭕️");
 
-        assertThrowsExactly(IllegalArgumentException.class, () -> {
-            g.nextAttempt(10);
-        });
+        assertThrowsExactly(IllegalArgumentException.class, () -> g.nextAttempt(10));
 
+    }
+
+    @Test
+    void checkVictoryTest() {
+        Game game = new Game("X", "O");
+
+        // Player 1 marks box 1
+        game.nextAttempt(1);
+        // Player 2 plays box 5
+        Player p = game.getNextTurn();
+        game.nextAttempt(5);
+        assertEquals(game.getP2(), p); // Player 1 should have the next turn
+        // Game has only been played by two moves. No winner yet
+        assertNull(game.checkVictory(5, p));
+
+        p = game.getNextTurn();
+        assertEquals(game.getP1(), p); // Player 1 should have the next turn
+        game.nextAttempt(2);
+        // box number 4 has not been filled
+        Player finalP = p;
+        assertThrowsExactly(IllegalStateException.class, () -> game.checkVictory(4, finalP));
+        // box number 5 was filled by player 2 and not player 1
+        assertThrowsExactly(IllegalStateException.class, () -> game.checkVictory(5, finalP));
+        // Game has only been played by three total moves. No winner yet
+        assertNull(game.checkVictory(2, p));
+
+        // Player 2
+        game.nextAttempt(6);
+        // Player 1 has played boxes 1,2,3
+        p = game.getNextTurn();
+        assertEquals(game.getP1(), p); // Player 1 should have the next turn
+        game.nextAttempt(3);
+        assertEquals(game.getP1(), game.checkVictory(3, p));
     }
 }
