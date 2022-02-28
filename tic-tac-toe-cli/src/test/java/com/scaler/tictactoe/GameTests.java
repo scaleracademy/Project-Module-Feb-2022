@@ -53,4 +53,24 @@ public class GameTests {
         });
 
     }
+
+    void checkVictory() {
+        Game g = new Game("X", "O");
+        g.nextAttempt(1);
+        assertNull(g.checkVictory());
+        g.nextAttempt(5);
+        assertNull(g.checkVictory());
+        g.nextAttempt(9);
+        assertNull(g.checkVictory());
+        g.nextAttempt(3);
+        assertNull(g.checkVictory());
+        g.nextAttempt(7);
+        assertNull(g.checkVictory());
+        g.nextAttempt(4);
+        assertNull(g.checkVictory());
+        g.nextAttempt(8);
+
+        assertEquals(g.getP1(), g.checkVictory());
+    }
+
 }
