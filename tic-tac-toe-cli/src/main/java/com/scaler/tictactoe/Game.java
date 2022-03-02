@@ -47,7 +47,15 @@ public class Game {
         // switch turn of players
         if (nextTurn == p1) nextTurn = p2;
         else nextTurn = p1;
+    }
 
-
+    /**
+     * Checks board state and tells if any winners
+     *
+     * @return p1 or p2 whoever has won; or null if no winner yet
+     */
+    public Player checkVictory() {
+        // TODO
+        return null;
     }
 }
