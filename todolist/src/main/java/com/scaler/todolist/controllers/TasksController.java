@@ -26,4 +26,18 @@ public class TasksController {
         return ResponseEntity.status(201).body(taskToAdd);
     }
 
+    /*
+     * ASSIGNMENT:
+     *  1. GET -> /tasks/3
+     *          get task no 3
+     *          send 404 error to client if task no 3 does not exist
+     *  2. PATCH -> /tasks/2
+     *          update due date or done status for task no 2
+     *          send 404 error to client if task no 3 does not exist
+     *  3. DELETE -> tasks/5
+     *          delete task no 5 (response with correct HTTP code)
+     *          if task 5 does not exist, send 404
+     */
+
+
 }
