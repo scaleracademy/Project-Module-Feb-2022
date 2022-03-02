@@ -58,4 +58,12 @@ public class Game {
         // TODO
         return null;
     }
+
+    public String printGameState() {
+        return "  " + gameState[0][0] + " | " + gameState[0][1] + " | " + gameState[0][2] + "\n" +
+                "------------\n" +
+                "  " + gameState[1][0] + " | " + gameState[1][1] + " | " + gameState[1][2] + "\n" +
+                "------------\n" +
+                "  " + gameState[2][0] + " | " + gameState[2][1] + " | " + gameState[2][2];
+    }
 }
