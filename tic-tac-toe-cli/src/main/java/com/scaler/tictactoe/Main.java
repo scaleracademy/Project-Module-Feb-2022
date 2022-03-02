@@ -3,6 +3,9 @@ package com.scaler.tictactoe;
 public class Main {
     public static void main(String[] args) {
 
+        Game game = new Game("X", "O");
+        System.out.println(game.printGameState());
+
         /*
         TODO: Create the entire game; steps are:
             1. Construct game object with 2 player characters
