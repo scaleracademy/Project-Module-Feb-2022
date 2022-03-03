@@ -1,10 +1,25 @@
 package com.scaler.tictactoe;
 
+import java.io.BufferedReader;
 import java.io.Console;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class IOHelper {
 
-    static Console console = System.console();
+    private static String readLine() {
+        Console console = System.console();
+        if (console != null) {
+            return console.readLine();
+        } else {
+            BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
+            try {
+                return consoleReader.readLine();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
 
     static void declareVictor(Player victor) {
         if (victor == null) {
@@ -18,7 +33,7 @@ public class IOHelper {
         System.out.println("Enter box number (1-9) to be filled.");
         int boxNumber;
         try {
-            boxNumber = Integer.parseInt(console.readLine());
+            boxNumber = Integer.parseInt(readLine());
             System.out.println();
             if (boxNumber < 1 || boxNumber > 9) {
                 System.out.println("Invalid Box number. Please try again.\n");
@@ -50,11 +65,11 @@ public class IOHelper {
 
     static String getPlayerString(int playerNum) {
         System.out.println("Enter character for Player " + playerNum);
-        String character = console.readLine();
+        String character = readLine();
         System.out.println();
         while (character.length() > 1) {
             System.out.println("Please enter a single character.");
-            character = console.readLine();
+            character = readLine();
             System.out.println();
         }
         return character;
