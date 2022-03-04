@@ -45,6 +45,22 @@ public class TasksController {
         return ResponseEntity.ok(body);
     }
 
+    @DeleteMapping("/{id}")
+    ResponseEntity<TaskResponseDTO> updateTaskById(@PathVariable int id){
+        // If Index out of Bounds, return Not found
+        if(taskList.size() <= id){
+            TaskResponseDTO body = new TaskResponseDTO();
+            body.setStatus(404);
+            body.setMessage("Task Not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
+        }
+        Task task = taskList.remove(id);
+        TaskResponseDTO body = new TaskResponseDTO();
+        body.setStatus(204);
+        body.setMessage("Task deleted.");
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(body);
+    }
+
     /*
      * ASSIGNMENT:
      *  1. GET -> /tasks/3
