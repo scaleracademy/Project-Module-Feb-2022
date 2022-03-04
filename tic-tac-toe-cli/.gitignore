@@ -36,3 +36,6 @@ local.properties
 .gradle/
 build/
 bin/
+
+# Ignore Mac related files
+**/.DS_Store
