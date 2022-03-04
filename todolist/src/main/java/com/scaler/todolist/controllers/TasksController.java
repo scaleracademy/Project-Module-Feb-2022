@@ -1,5 +1,6 @@
 package com.scaler.todolist.controllers;
 
+import com.scaler.todolist.DTO.TaskResponseDTO;
 import com.scaler.todolist.models.Task;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,13 +29,20 @@ public class TasksController {
     }
 
     @GetMapping("/{id}")
-    ResponseEntity<Optional<Task>> getTaskById(@PathVariable int id){
+    ResponseEntity<TaskResponseDTO> getTaskById(@PathVariable int id){
         // If Index out of Bounds, return Not found
-        if(taskList.size() < id){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Optional.ofNullable(null));
+        if(taskList.size() <= id){
+            TaskResponseDTO body = new TaskResponseDTO();
+            body.setStatus(404);
+            body.setMessage("Task Not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
         }
-        Optional<Task> task = Optional.ofNullable(taskList.get(id));
-        return ResponseEntity.ok(task);
+        Task task = taskList.get(id);
+        TaskResponseDTO body = new TaskResponseDTO();
+        body.setStatus(200);
+        body.setMessage("Task updated.");
+        body.setTask(task);
+        return ResponseEntity.ok(body);
     }
 
     /*
