@@ -1,0 +1,15 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    url: "jdbc:h2:file:./test.db"
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update # dangerous for production
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
