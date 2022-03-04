@@ -1,12 +1,13 @@
 package com.scaler.todolist.controllers;
 
 import com.scaler.todolist.models.Task;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RequestMapping("/tasks")
 @RestController
@@ -24,6 +25,16 @@ public class TasksController {
         Task taskToAdd = new Task(task.getName());
         taskList.add(taskToAdd);
         return ResponseEntity.status(201).body(taskToAdd);
+    }
+
+    @GetMapping("/{id}")
+    ResponseEntity<Optional<Task>> getTaskById(@PathVariable int id){
+        // If Index out of Bounds, return Not found
+        if(taskList.size() < id){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Optional.ofNullable(null));
+        }
+        Optional<Task> task = Optional.ofNullable(taskList.get(id));
+        return ResponseEntity.ok(task);
     }
 
     /*
