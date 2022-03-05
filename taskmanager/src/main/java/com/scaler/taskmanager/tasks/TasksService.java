@@ -1,6 +1,9 @@
 package com.scaler.taskmanager.tasks;
 
 
+import com.scaler.taskmanager.notes.NotesRepository;
+import com.scaler.taskmanager.notes.NotesResponseBody;
+import com.scaler.taskmanager.notes.NotesService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
@@ -10,8 +13,14 @@ import java.util.List;
 public class TasksService {
     private TasksRepository tasksRepo;
 
-    public TasksService(TasksRepository tasksRepo) {
+    private NotesRepository notesRepository;
+
+    private NotesService notesService;
+
+    public TasksService(TasksRepository tasksRepo, NotesRepository notesRepository, NotesService notesService) {
         this.tasksRepo = tasksRepo;
+        this.notesRepository = notesRepository;
+        this.notesService = notesService;
     }
 
     List<TaskEntity> getAllTasks() {
@@ -24,4 +33,34 @@ public class TasksService {
         return savedTask;
     }
 
+    List<NotesResponseBody> getNotesByTask(Long taskId){
+        return notesRepository.fetchAllByTaskId(taskId);
+    }
+
+    TaskResponseBody updateTask(UpdateTaskRequestBody requestBody){
+        return convertFromEntity(tasksRepo.save(convertFromUpdateRequestBody(requestBody)));
+    }
+
+    TaskEntity convertFromUpdateRequestBody(UpdateTaskRequestBody requestBody){
+        return new TaskEntity(requestBody.getId(), requestBody.getName(), requestBody.getDueDate(), requestBody.getStatus());
+    }
+
+    TaskResponseBody convertFromEntity(TaskEntity entity){
+        return TaskResponseBody.builder().
+                id(entity.getId()).
+                name(entity.getName()).
+                dueDate(entity.getDueDate()).
+                status(entity.getStatus()).
+                build();
+    }
+
+
+    public boolean delete(Long id) {
+        if(tasksRepo.existsById(id)){
+            tasksRepo.deleteById(id);
+            notesService.deleteByTask(id);
+            return true;
+        }else
+            return false;
+    }
 }

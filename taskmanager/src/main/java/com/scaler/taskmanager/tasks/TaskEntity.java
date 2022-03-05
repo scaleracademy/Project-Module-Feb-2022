@@ -11,7 +11,8 @@ import java.time.temporal.ChronoUnit;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@Entity(name = "tasks")
+@Entity
+@Table(name = "tasks")
 public class TaskEntity {
 
     public TaskEntity(String name) {
