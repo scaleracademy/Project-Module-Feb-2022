@@ -13,6 +13,7 @@ import java.util.Date;
 @Getter(AccessLevel.PUBLIC)
 @Setter(AccessLevel.PUBLIC)
 public class Task {
+    private Integer id;
     private String name;
     private LocalDate due;
     private Boolean done;
