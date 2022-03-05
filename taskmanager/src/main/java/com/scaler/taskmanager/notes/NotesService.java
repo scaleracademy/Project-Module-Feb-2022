@@ -16,22 +16,26 @@ public class NotesService {
     @Autowired
     private TasksRepository tasksRepository;
 
-    public NotesResponseBody getNoteById(Long id){
-        return convertFromEntity(notesRepository.getById(id));
-    }
 
-    public NotesResponseBody getParticularNote(Long id){
-        return convertFromEntity(notesRepository.getById(id));
+    List<NotesResponseBody> getNotesByTask(Long taskId){
+        return notesRepository.fetchAllByTaskId(taskId);
     }
-
 
     public NotesResponseBody addNote(CreateNoteRequestBody request, Long taskId){
-        return convertFromEntity(notesRepository.save(convertFromCreateRequestBody(request, taskId)));
+        if(tasksRepository.existsById(taskId))
+            return convertFromEntity(notesRepository.save(convertFromCreateRequestBody(request, taskId)));
+        else
+            return null;
     }
 
-    public NotesResponseBody addNote(UpdateNoteRequestBody request){
-        return convertFromEntity(notesRepository.save(convertFromUpdateRequestBody(request)));
+    public NotesResponseBody updateNote(CreateNoteRequestBody request, Long noteId, Long taskId){
+        if(tasksRepository.existsById(taskId))
+            if(notesRepository.existsById(noteId))
+                return convertFromEntity(notesRepository.save(new NoteEntity(noteId, request.getBody(), tasksRepository.getById(taskId))));
+
+        return null;
     }
+
 
 
     public NotesResponseBody convertFromEntity(NoteEntity entity){
@@ -45,9 +49,6 @@ public class NotesService {
         return new NoteEntity(requestBody.getBody(), tasksRepository.getById(taskId));
     }
 
-    public NoteEntity convertFromUpdateRequestBody(UpdateNoteRequestBody requestBody){
-        return new NoteEntity(requestBody.getId(), requestBody.getBody(), tasksRepository.getById(requestBody.getTaskId()));
-    }
 
     public boolean delete(Long id, Long taskId) {
         if(notesRepository.fetchAllByTaskId(taskId).size() > 0)

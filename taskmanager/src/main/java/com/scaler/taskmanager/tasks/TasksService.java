@@ -33,12 +33,10 @@ public class TasksService {
         return savedTask;
     }
 
-    List<NotesResponseBody> getNotesByTask(Long taskId){
-        return notesRepository.fetchAllByTaskId(taskId);
-    }
 
     TaskResponseBody updateTask(UpdateTaskRequestBody requestBody){
-        return convertFromEntity(tasksRepo.save(convertFromUpdateRequestBody(requestBody)));
+        return tasksRepo.existsById(requestBody.getId()) ? convertFromEntity(tasksRepo.save(convertFromUpdateRequestBody(requestBody)))
+                : null;
     }
 
     TaskEntity convertFromUpdateRequestBody(UpdateTaskRequestBody requestBody){
