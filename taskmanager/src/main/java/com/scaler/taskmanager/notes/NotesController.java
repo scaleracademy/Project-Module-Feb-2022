@@ -21,4 +21,10 @@ public class NotesController {
     ResponseEntity<List<NoteEntity>> getAllByTaskId(@PathVariable Long id){
         return ResponseEntity.ok(notesService.getAllByTaskId(id));
     }
+
+    @DeleteMapping("/tasks/{id}/notes/{nid}")
+    ResponseEntity<NoteResponseDTO> deleteByTaskIdAndNoteId(@PathVariable Long id,@PathVariable Long nid){
+        NoteResponseDTO noteResponseDTO = notesService.deleteByTaskIdAndNoteId(id,nid);
+        return ResponseEntity.status(noteResponseDTO.getStatus()).body(noteResponseDTO);
+    }
 }

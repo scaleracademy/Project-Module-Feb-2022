@@ -1,11 +1,13 @@
 package com.scaler.taskmanager.notes;
 
+import com.scaler.taskmanager.tasks.TaskEntity;
 import com.scaler.taskmanager.tasks.TaskResponseDTO;
 import com.scaler.taskmanager.tasks.TasksService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class NotesService {
@@ -39,5 +41,44 @@ public class NotesService {
 
     List<NoteEntity> getAllByTaskId(Long taskId){
         return notesRepository.findByTaskId(taskId);
+    }
+
+    public NoteResponseDTO getById(Long id) {
+
+        Optional<NoteEntity> note = notesRepository.findById(id);
+
+        NoteResponseDTO response = new NoteResponseDTO();
+
+        if(note.isEmpty() == true){
+            response.setStatus(404);
+            response.setMessage("Note not found.");
+        }else{
+            response.setStatus(200);
+            response.setMessage("Note found.");
+            response.setNote(note.get());
+        }
+
+        return response;
+    }
+
+    NoteResponseDTO deleteByTaskIdAndNoteId(Long taskId, Long noteId){
+        TaskResponseDTO taskResponseDTO = this.tasksService.getById(taskId);
+        NoteResponseDTO noteResponseDTO = getById(noteId);
+        NoteResponseDTO responseDTO = new NoteResponseDTO();
+
+        if(taskResponseDTO.getStatus() == 404){
+            responseDTO.setStatus(404);
+            responseDTO.setMessage("Task Not Found.");
+        }else if(noteResponseDTO.getStatus() == 404){
+            responseDTO.setStatus(404);
+            responseDTO.setMessage("Note Not Found.");
+        }else{
+            notesRepository.deleteById(noteId);
+            responseDTO.setStatus(200);
+            responseDTO.setMessage("Note deleted successfully.");
+            responseDTO.setNote(noteResponseDTO.getNote());
+        }
+
+        return responseDTO;
     }
 }
