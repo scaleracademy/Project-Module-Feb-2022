@@ -27,7 +27,7 @@ public class TasksService {
         return savedTask;
     }
 
-    TaskResponseDTO getById(Long id) {
+    public TaskResponseDTO getById(Long id) {
 
         Optional<TaskEntity> task = tasksRepo.findById(id);
 
