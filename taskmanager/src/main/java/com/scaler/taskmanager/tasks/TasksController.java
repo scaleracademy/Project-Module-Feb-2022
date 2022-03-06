@@ -32,4 +32,10 @@ public class TasksController {
                 URI.create(Constants.BASE_URL + "/tasks/" + savedTask.id)
         ).body(savedTask);
     }
+
+    @GetMapping("/{id}")
+    ResponseEntity<TaskResponseDTO> getById(@PathVariable Long id){
+        TaskResponseDTO taskResponseDTO = tasksService.getById(id);
+        return ResponseEntity.status(taskResponseDTO.getStatus()).body(taskResponseDTO);
+    }
 }
