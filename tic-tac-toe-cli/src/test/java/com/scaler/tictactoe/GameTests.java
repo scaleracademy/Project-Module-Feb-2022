@@ -53,4 +53,45 @@ public class GameTests {
         });
 
     }
+
+    @Test
+    void isVictoryDiagonal() {
+        Game g = new Game("❌", "⭕️");
+        g.nextAttempt(1);
+        g.nextAttempt(2);
+        g.nextAttempt(5);
+        g.nextAttempt(3);
+        g.nextAttempt(9);
+
+        assertEquals(g.getP1(), g.checkVictory());
+
+    }
+
+    @Test
+    void isVictoryFirstRow() {
+        Game g = new Game("❌", "⭕️");
+        g.nextAttempt(1);
+        g.nextAttempt(4);
+        g.nextAttempt(2);
+        g.nextAttempt(5);
+        assertNull(g.checkVictory());
+
+        g.nextAttempt(3);
+        assertEquals(g.getP1(), g.checkVictory());
+
+    }
+
+    @Test
+    void isVictoryFirstColumn() {
+
+        Game g = new Game("⭕️", "❌");
+        g.nextAttempt(1);
+        g.nextAttempt(2);
+        g.nextAttempt(4);
+        g.nextAttempt(5);
+        assertNull(g.checkVictory());
+
+        g.nextAttempt(7);
+        assertEquals(g.getP1(), g.checkVictory());
+    }
 }
