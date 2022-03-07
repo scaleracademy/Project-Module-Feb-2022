@@ -1,6 +1,8 @@
 package com.scaler.taskmanager.notes;
 
 import com.scaler.taskmanager.Constants;
+import com.scaler.taskmanager.notes.dto.CreateNoteRequestBody;
+import com.scaler.taskmanager.notes.dto.NotesResponseBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

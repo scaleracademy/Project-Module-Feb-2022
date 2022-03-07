@@ -1,7 +1,7 @@
 package com.scaler.taskmanager.notes;
 
-import com.scaler.taskmanager.Constants;
 import com.scaler.taskmanager.QueryConstants;
+import com.scaler.taskmanager.notes.dto.NotesResponseBody;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

@@ -1,16 +1,15 @@
 package com.scaler.taskmanager.tasks;
 
 import com.scaler.taskmanager.Constants;
-import com.scaler.taskmanager.notes.CreateNoteRequestBody;
-import com.scaler.taskmanager.notes.NotesResponseBody;
 import com.scaler.taskmanager.notes.NotesService;
+import com.scaler.taskmanager.tasks.dto.CreateTaskRequestBody;
+import com.scaler.taskmanager.tasks.dto.TaskResponseBody;
+import com.scaler.taskmanager.tasks.dto.UpdateTaskRequestBody;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RequestMapping("/tasks")
 @RestController
@@ -33,7 +32,7 @@ public class TasksController {
     @PostMapping("")
     ResponseEntity<TaskEntity> createTask(@RequestBody CreateTaskRequestBody body) {
 
-        TaskEntity savedTask = tasksService.addNewTask(body.name);
+        TaskEntity savedTask = tasksService.addNewTask(body.getName());
 
         return ResponseEntity.created(
                 URI.create(Constants.BASE_URL + "/tasks/" + savedTask.id)

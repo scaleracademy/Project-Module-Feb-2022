@@ -1,4 +1,4 @@
-package com.scaler.taskmanager.notes;
+package com.scaler.taskmanager.notes.dto;
 
 import lombok.*;
 

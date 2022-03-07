@@ -1,5 +1,7 @@
 package com.scaler.taskmanager.notes;
 
+import com.scaler.taskmanager.notes.dto.CreateNoteRequestBody;
+import com.scaler.taskmanager.notes.dto.NotesResponseBody;
 import com.scaler.taskmanager.tasks.TasksRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

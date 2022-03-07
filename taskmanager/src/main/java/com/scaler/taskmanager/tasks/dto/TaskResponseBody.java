@@ -1,13 +1,14 @@
-package com.scaler.taskmanager.tasks;
+package com.scaler.taskmanager.tasks.dto;
 
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDate;
 
+
 @Getter
-@Setter
-public class UpdateTaskRequestBody {
+@Builder
+public class TaskResponseBody {
 
     private Long id;
 
