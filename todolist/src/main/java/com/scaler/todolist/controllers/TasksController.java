@@ -1,10 +1,12 @@
 package com.scaler.todolist.controllers;
 
+import com.scaler.todolist.exceptions.ErrorMessages;
+import com.scaler.todolist.exceptions.TaskServiceException;
 import com.scaler.todolist.models.Task;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.http.HttpResponse;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,5 +41,33 @@ public class TasksController {
      *          if task 5 does not exist, send 404
      */
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Task> getTask(@PathVariable int id){
+        int index = id - 1;
+        if(index >= taskList.size()) throw new TaskServiceException(ErrorMessages.INVALID_TASK_ID.getErrorMessage());
 
+        return ResponseEntity.status(200).body(taskList.get(index));
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Task> updateTask(@PathVariable int id, @RequestBody Task reqBody){
+        int index = id - 1;
+        if(index >= taskList.size()) throw new TaskServiceException(ErrorMessages.INVALID_TASK_ID.getErrorMessage());
+
+        Task toUpdate = taskList.get(index);
+        if(reqBody.getDue() != null)toUpdate.setDue(reqBody.getDue());
+        if(reqBody.getDone() != null)toUpdate.setDone(reqBody.getDone());
+        taskList.set(index, toUpdate);
+        return  ResponseEntity.status(200).body(toUpdate);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteTask(@PathVariable int id){
+        int index = id - 1;
+        if(index >= taskList.size()) throw new TaskServiceException(ErrorMessages.INVALID_TASK_ID.getErrorMessage());
+
+        taskList.remove(index);
+
+        return ResponseEntity.status(202).body("Task successfully deleted");
+    }
 }
