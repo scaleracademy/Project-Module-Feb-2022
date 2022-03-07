@@ -8,7 +8,8 @@ public class PlayerTests {
 
     @Test
     void constructPlayerWithCharacter () {
-        Player p1 = new Player("❌");
+        Player p1 = new Player("❌", 1);
         assertEquals("❌", p1.getCharacter());
+        assertEquals(1, p1.getId());
     }
 }
