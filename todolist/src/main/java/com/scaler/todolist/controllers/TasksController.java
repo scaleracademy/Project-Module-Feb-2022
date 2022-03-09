@@ -4,7 +4,6 @@ import com.scaler.todolist.models.Task;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +20,7 @@ public class TasksController {
 
     @PostMapping("/")
     ResponseEntity<Task> addNewTask(@RequestBody Task task) {
-        Task taskToAdd = new Task(task.getName());
+        Task taskToAdd = new Task(task.getId(),task.getName());
         taskList.add(taskToAdd);
         return ResponseEntity.status(201).body(taskToAdd);
     }
@@ -39,5 +38,36 @@ public class TasksController {
      *          if task 5 does not exist, send 404
      */
 
+    @GetMapping("/{id}")
+    ResponseEntity<Task> getTaskById(@PathVariable("id") Long taskId) {
+        for(Task taskItr: taskList) {
+            if(taskItr.getId() == taskId) {
+                return ResponseEntity.ok(taskItr);
+            }
+        }
+        return ResponseEntity.status(404).body(null);
+    }
 
+    @PatchMapping("/{id}")
+    ResponseEntity<Task> updateTaskById(@PathVariable("id") Long taskId,@RequestBody Task task) {
+        for(Task taskItr:taskList) {
+            if(taskItr.getId() == taskId) {
+                taskItr.setDone(task.getDone());
+                taskItr.setDue(task.getDue());
+                return ResponseEntity.ok(taskItr);
+            }
+        }
+        return ResponseEntity.status(404).body(null);
+    }
+
+    @DeleteMapping("/{id}")
+    ResponseEntity<?> deleteTaskById(@PathVariable("id") Long taskId) {
+        for(Task task:taskList) {
+            if(task.getId() == taskId) {
+                taskList.remove(task);
+                return ResponseEntity.noContent().build();
+            }
+        }
+        return ResponseEntity.status(404).body(null);
+    }
 }
