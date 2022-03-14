@@ -1,4 +1,7 @@
 package com.scaler.taskmanager.notes;
 
-public class NotesRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface  NotesRepository  extends JpaRepository<NoteEntity,Long> {
+
 }

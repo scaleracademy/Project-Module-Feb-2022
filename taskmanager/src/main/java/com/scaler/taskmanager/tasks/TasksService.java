@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TasksService {
@@ -14,14 +15,27 @@ public class TasksService {
         this.tasksRepo = tasksRepo;
     }
 
-    List<TaskEntity> getAllTasks() {
+    public List<TaskEntity> getAllTasks() {
         return tasksRepo.findAll();
     }
 
-    TaskEntity addNewTask(String taskName) {
+    public TaskEntity addNewTask(String taskName) {
         TaskEntity task = new TaskEntity(taskName);
         TaskEntity savedTask = tasksRepo.save(task);
         return savedTask;
+    }
+
+    public TaskEntity getTaskById(Long id) {
+        return tasksRepo.getById(id);
+    }
+
+    public boolean deleteTaskById(Long taskId) {
+
+        if(tasksRepo.existsById(taskId)){
+            tasksRepo.deleteById(taskId);
+            return true;
+        }
+        return false;
     }
 
 }

@@ -20,12 +20,14 @@ public class TaskEntity {
         this.status = false;
     }
 
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     Long id;
 
     @Column(nullable = false)
     String name;
 
+    @Column(nullable = false)
     LocalDate dueDate;
 
     @Column(columnDefinition = "boolean default false")
