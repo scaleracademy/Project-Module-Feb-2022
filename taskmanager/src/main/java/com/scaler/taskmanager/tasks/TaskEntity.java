@@ -1,8 +1,6 @@
 package com.scaler.taskmanager.tasks;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -10,7 +8,8 @@ import java.time.temporal.ChronoUnit;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
+@Getter(AccessLevel.PUBLIC)
+@Setter(AccessLevel.PUBLIC)
 @Entity(name = "tasks")
 public class TaskEntity {
 

@@ -1,13 +1,12 @@
 package com.scaler.taskmanager.notes.dto;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
-@Setter
 @Builder
-public class NoteResponseEntity {
+public class NoteResponseBody {
     Long id;
     String body;
     Long taskId;
