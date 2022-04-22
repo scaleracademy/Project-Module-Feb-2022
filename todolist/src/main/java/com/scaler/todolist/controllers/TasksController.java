@@ -1,12 +1,15 @@
 package com.scaler.todolist.controllers;
 
+import com.scaler.todolist.DTO.TaskResponseDTO;
+import com.scaler.todolist.DTO.UpdateRequestDTO;
 import com.scaler.todolist.models.Task;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RequestMapping("/tasks")
 @RestController
@@ -24,6 +27,61 @@ public class TasksController {
         Task taskToAdd = new Task(task.getName());
         taskList.add(taskToAdd);
         return ResponseEntity.status(201).body(taskToAdd);
+    }
+
+    @GetMapping("/{id}")
+    ResponseEntity<TaskResponseDTO> getTaskById(@PathVariable int id){
+        // If Index out of Bounds, return Not found
+        if(taskList.size() <= id){
+            TaskResponseDTO body = new TaskResponseDTO();
+            body.setStatus(404);
+            body.setMessage("Task Not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
+        }
+        Task task = taskList.get(id);
+        TaskResponseDTO body = new TaskResponseDTO();
+        body.setStatus(200);
+        body.setMessage("Task updated.");
+        body.setTask(task);
+        return ResponseEntity.ok(body);
+    }
+
+    @PatchMapping("/{id}")
+    ResponseEntity<TaskResponseDTO> updateTaskById(@PathVariable int id, @RequestBody UpdateRequestDTO updateRequestDTO){
+        // If Index out of Bounds, return Not found
+        if(taskList.size() <= id){
+            TaskResponseDTO body = new TaskResponseDTO();
+            body.setStatus(404);
+            body.setMessage("Task Not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
+        }
+        Task task = taskList.get(id);
+        if(updateRequestDTO.getDone() != null)task.setDone(updateRequestDTO.getDone());
+        if(updateRequestDTO.getDue() != null)task.setDue(updateRequestDTO.getDue());
+        taskList.add(id,task);
+
+        TaskResponseDTO body = new TaskResponseDTO();
+        body.setStatus(200);
+        body.setMessage("Task updated.");
+        body.setTask(task);
+        return ResponseEntity.ok(body);
+    }
+
+    @DeleteMapping("/{id}")
+    ResponseEntity<TaskResponseDTO> updateTaskById(@PathVariable int id){
+        // If Index out of Bounds, return Not found
+        if(taskList.size() <= id){
+            TaskResponseDTO body = new TaskResponseDTO();
+            body.setStatus(404);
+            body.setMessage("Task Not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
+        }
+        Task task = taskList.remove(id);
+
+        TaskResponseDTO body = new TaskResponseDTO();
+        body.setStatus(204);
+        body.setMessage("Task deleted.");
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(body);
     }
 
     /*
