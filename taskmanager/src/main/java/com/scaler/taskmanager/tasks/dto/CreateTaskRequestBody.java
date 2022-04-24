@@ -1,4 +1,4 @@
-package com.scaler.taskmanager.tasks;
+package com.scaler.taskmanager.tasks.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

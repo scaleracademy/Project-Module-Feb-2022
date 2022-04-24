@@ -10,7 +10,8 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@Entity(name = "notes")
+@Entity
+@Table(name = "notes")
 public class NoteEntity  {
     @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
     Long id;
@@ -20,4 +21,9 @@ public class NoteEntity  {
 
     @ManyToOne
     TaskEntity task;
+
+    public NoteEntity(String body, TaskEntity task) {
+        this.body = body;
+        this.task = task;
+    }
 }
