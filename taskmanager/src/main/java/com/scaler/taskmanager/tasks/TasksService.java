@@ -1,10 +1,10 @@
 package com.scaler.taskmanager.tasks;
 
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TasksService {
@@ -24,4 +24,7 @@ public class TasksService {
         return savedTask;
     }
 
+    public TaskEntity getTaskById(long id) {
+        return tasksRepo.findById(id).orElseThrow();
+    }
 }
