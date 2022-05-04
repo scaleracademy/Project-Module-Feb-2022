@@ -20,4 +20,9 @@ public class NoteEntity  {
 
     @ManyToOne
     TaskEntity task;
+
+    public NoteEntity(String body, TaskEntity task){
+        this.body = body;
+        this.task = task;
+    }
 }

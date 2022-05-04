@@ -27,4 +27,12 @@ public class TasksService {
     public TaskEntity getTaskById(long id) {
         return tasksRepo.findById(id).orElseThrow();
     }
+
+    public void deleteTask(Long taskId) {
+        tasksRepo.deleteById(taskId);
+    }
+
+    public void updateTask(TaskEntity taskPatched) {
+        tasksRepo.save(taskPatched);
+    }
 }
