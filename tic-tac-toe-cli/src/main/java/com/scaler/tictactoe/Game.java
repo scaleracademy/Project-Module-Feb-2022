@@ -55,7 +55,35 @@ public class Game {
      * @return p1 or p2 whoever has won; or null if no winner yet
      */
     public Player checkVictory() {
-        // TODO
+        //Diagonal
+        if(gameState[0][0] !=null && gameState[0][0] == gameState[1][1] && gameState[2][2]==gameState[1][1]){
+            return gameState[0][0] == p1.getCharacter() ? p1:p2;
+        }
+        if(gameState[0][2] !=null && gameState[0][2] == gameState[1][1] && gameState[2][0]==gameState[1][1]){
+            return gameState[0][0] == p1.getCharacter() ? p1:p2;
+        }
+        //Row
+        if(gameState[0][0] !=null && gameState[0][0] == gameState[0][1] && gameState[0][1] == gameState[0][2])
+            return gameState[0][0] == p1.getCharacter() ? p1:p2;
+
+        if(gameState[1][0] !=null && gameState[1][0] == gameState[1][1] && gameState[1][1] == gameState[1][2])
+            return gameState[1][0] == p1.getCharacter() ? p1:p2;
+
+        if(gameState[2][0] !=null && gameState[2][0] == gameState[2][1] && gameState[2][1] == gameState[2][2])
+            return gameState[2][0] == p1.getCharacter() ? p1:p2;
+
+        //Column
+        if(gameState[0][0] !=null && gameState[0][0] == gameState[1][0] && gameState[2][0]==gameState[1][0]){
+            return gameState[0][0] == p1.getCharacter() ? p1:p2;
+        }
+
+        if(gameState[0][1] !=null && gameState[0][1] == gameState[1][1] && gameState[2][1]==gameState[1][1]){
+            return gameState[0][1] == p1.getCharacter() ? p1:p2;
+        }
+
+        if(gameState[0][2] !=null && gameState[0][2] == gameState[1][2] && gameState[2][2]==gameState[1][2]){
+            return gameState[0][2] == p1.getCharacter() ? p1:p2;
+        }
         return null;
     }
 

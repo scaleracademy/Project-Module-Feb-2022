@@ -1,10 +1,9 @@
 package com.scaler.tictactoe;
 
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
-
-        Game game = new Game("X", "O");
-        System.out.println(game.printGameState());
 
         /*
         TODO: Create the entire game; steps are:
@@ -17,5 +16,31 @@ public class Main {
                 5.1  checkVictory function shows any player has won
                 5.2  all boxes have been marked
          */
+
+        Game game = new Game("X", "O");
+
+        Scanner scan = new Scanner(System.in);
+        int plays = 0;
+        while (game.checkVictory() == null && plays < 9) {
+            try {
+                System.out.println("Player - " + game.getNextTurn().getCharacter());
+                System.out.println(game.printGameState());
+                int num = scan.nextInt();
+                game.nextAttempt(num);
+                plays++;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+                continue;
+            } catch (IllegalStateException e) {
+                System.out.println(e.getMessage());
+                continue;
+            }
+        }
+        var result = game.checkVictory();
+        if (result == null) {
+            System.out.println("Its a Tie!");
+        } else {
+            System.out.println("Congratulation " + result.getCharacter());
+        }
     }
 }
