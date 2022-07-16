@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class PlayerTests {
 
     @Test
-    void constructPlayerWithCharacter () {
+    void constructPlayerWithCharacter() {
         Player p1 = new Player("❌");
         assertEquals("❌", p1.getCharacter());
     }
