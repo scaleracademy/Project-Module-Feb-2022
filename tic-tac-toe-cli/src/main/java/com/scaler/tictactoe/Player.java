@@ -7,4 +7,5 @@ import lombok.Getter;
 @Getter
 public class Player {
     private String character;
+    private String name;
 }

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/auth-sample" />
+    <file type="web" url="file://$PROJECT_DIR$/sample-java-proj/sample-java-proj" />
+    <file type="web" url="file://$PROJECT_DIR$/spring-intro" />
+    <file type="web" url="file://$PROJECT_DIR$/taskmanager" />
+    <file type="web" url="file://$PROJECT_DIR$/tic-tac-toe-cli" />
+    <file type="web" url="file://$PROJECT_DIR$/todolist" />
+  </component>
+  <component name="ProjectRootManager" version="2" project-jdk-name="corretto-17" project-jdk-type="JavaSDK" />
+</project>
